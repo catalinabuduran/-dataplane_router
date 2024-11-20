@@ -1,0 +1,15 @@
+In implementarea mea m-am folosit de functiile:
+-compare ->compar 2 intrari in tabela de rutare pentru a le sorta(compar prefixele, daca acestea sunt egale o sa compar mastile de retea)
+-binarySearch ->vreau sa gasesc cea mai buna ruta pentru o anumita adresa IP, cautand in tabela de rutare sortata
+-get_best_route ->caut cea mai potrivita ruta pentru o adresa IP folosind o cautare binara pe masti de retea
+-get_arp_entry ->returnez o intrare ARP a unei adrese IP date, cautand in tabela ARP
+-send_icmp_reply ->setez un raspuns ICMP pentru pachetul original si il trimit inapoi pe aceeasi interfata
+
+In main:
+-am alocat memorie pentru tabelele de rutare și ARP, și se citesc datele din fișierele corespunzătoare
+-in while routerul primește pachete de la diferite interfețe de rețea, procesează fiecare pachet și decide cum să îl trateze în funcție de tipul și destinația acestuia
+(verifică dacă pachetul este IPv4; dacă nu, pachetul este ignorat; calculează și verifică checksum-ul pentru header-ul IP pentru a asigura integritatea datelor;
+determin cea mai bună rută pentru adresă IP de destinație a pachetului folosind get_best_route si dacă nu se găsește o rută către adresa IP de destinație în tabela de rutare,
+ICMP e trimis înapoi la sursă pentru a informa ca e imposibil sa se trimita pachetul;verific daca pachetul primit este de tipul icmp echo pentru router;
+dacă TTL este <= 1, adica TTL pachetului expiră si informează sursa că pachetul nu a ajuns la destinație în limita de timp alocată).
+Dacă toate verificările sunt trecute și datele sunt corecte, pachetul este trimis mai departe către interfața specificată. In implementare m-am ajutat de solutia laboratorului 4.
